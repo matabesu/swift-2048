@@ -116,7 +116,11 @@ class GameModel: NSObject {
   }
 
   /// Insert a tile with a given value at a random open position upon the gameboard.
+  /**
+    タイルをランダムの位置に挿入する
+  */
   func insertTileAtRandomLocation(value: Int) {
+    // 開いている座標を配列で返却する
     let openSpots = gameboardEmptySpots()
     if openSpots.count == 0 {
       // No more open spots; don't even bother

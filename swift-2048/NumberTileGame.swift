@@ -169,13 +169,14 @@ class NumberTileGameViewController : UIViewController, GameModelProtocol {
     gameboard.frame = f
 
 
-    // Add to game state
+    // UIViewのメソッドでサブビューを追加
     view.addSubview(gameboard)
     board = gameboard
     view.addSubview(scoreView)
     self.scoreView = scoreView
 
     assert(model != nil)
+    // ゲームモデルオブジェクト
     let m = model!
     m.insertTileAtRandomLocation(2)
     m.insertTileAtRandomLocation(2)

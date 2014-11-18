@@ -14,18 +14,24 @@ import UIKit
 /// performs any animations to update its state.
 class NumberTileGameViewController : UIViewController, GameModelProtocol {
   // How many tiles in both directions the gameboard contains
+  // タイルを並べる数
   var dimension: Int
   // The value of the winning tile
+  // 上がりの数
   var threshold: Int
 
+  // 盤面のオブジェクト
   var board: GameboardView?
+  // ゲームの動作ロジック
   var model: GameModel?
-
+  // スコア表示のためのプロトコル。Views/AccessoryViews.swiftに書いてある
   var scoreView: ScoreViewProtocol?
 
   // Width of the gameboard
+  // 盤面全体の広さ
   let boardWidth: CGFloat = 230.0
   // How much padding to place between the tiles
+  // 枠のサイズ
   let thinPadding: CGFloat = 3.0
   let thickPadding: CGFloat = 6.0
 
@@ -36,11 +42,15 @@ class NumberTileGameViewController : UIViewController, GameModelProtocol {
   let verticalViewOffset: CGFloat = 0.0
 
   init(dimension d: Int, threshold t: Int) {
+    // 極端に小さい数値の場合はデフォルトで補正
     dimension = d > 2 ? d : 2
     threshold = t > 8 ? t : 8
     super.init(nibName: nil, bundle: nil)
+    // マスの数とあがりの数でゲームロジックを生成
     model = GameModel(dimension: dimension, threshold: threshold, delegate: self)
+    // 背景色を設定
     view.backgroundColor = UIColor.whiteColor()
+    // スワイプコントローラーをセット
     setupSwipeControls()
   }
 
@@ -48,10 +58,17 @@ class NumberTileGameViewController : UIViewController, GameModelProtocol {
     fatalError("NSCoding not supported")
   }
 
+  /**
+    スワイプコントローラー。スワイプ上下左右のスワイプをViewに登録している
+  */
   func setupSwipeControls() {
+    // スワイプを検知するオブジェクト
     let upSwipe = UISwipeGestureRecognizer(target: self, action: Selector("up:"))
+    // 指の本数を設定
     upSwipe.numberOfTouchesRequired = 1
+    // 上方向への認識
     upSwipe.direction = UISwipeGestureRecognizerDirection.Up
+    // Viewのジェスチャー認識オブジェクトにセット
     view.addGestureRecognizer(upSwipe)
 
     let downSwipe = UISwipeGestureRecognizer(target: self, action: Selector("down:"))
@@ -71,9 +88,10 @@ class NumberTileGameViewController : UIViewController, GameModelProtocol {
   }
 
 
-  // View Controller
+  // View Controllerの初期ロード
   override func viewDidLoad()  {
     super.viewDidLoad()
+    // ゲームのスタート
     setupGame()
   }
 
@@ -87,6 +105,9 @@ class NumberTileGameViewController : UIViewController, GameModelProtocol {
     m.insertTileAtRandomLocation(2)
   }
 
+  /**
+    ゲームのセットアップ
+  */
   func setupGame() {
     let vcHeight = view.bounds.size.height
     let vcWidth = view.bounds.size.width
@@ -114,6 +135,8 @@ class NumberTileGameViewController : UIViewController, GameModelProtocol {
     }
 
     // Create the score view
+    // AccessoryViewsにあるScoreViewを生成
+    // スコアの背景色、テキスト色、フォント、フォントサイズを指定
     let scoreView = ScoreView(backgroundColor: UIColor.blackColor(),
       textColor: UIColor.whiteColor(),
       font: UIFont(name: "HelveticaNeue-Bold", size: 16.0) ?? UIFont.systemFontOfSize(16.0),
@@ -124,6 +147,7 @@ class NumberTileGameViewController : UIViewController, GameModelProtocol {
     let padding: CGFloat = dimension > 5 ? thinPadding : thickPadding
     let v1 = boardWidth - padding*(CGFloat(dimension + 1))
     let width: CGFloat = CGFloat(floorf(CFloat(v1)))/CGFloat(dimension)
+    // ゲームの盤面を生成
     let gameboard = GameboardView(dimension: dimension,
       tileWidth: width,
       tilePadding: padding,

@@ -14,9 +14,15 @@ protocol AppearanceProviderProtocol: class {
   func fontForNumbers() -> UIFont
 }
 
+/**
+  タイルの表現を管理するクラス
+*/
 class AppearanceProvider: AppearanceProviderProtocol {
 
   // Provide a tile color for a given value
+  /**
+   タイルの数値によってタイルの色を変更させている
+  */
   func tileColor(value: Int) -> UIColor {
     switch value {
     case 2:
@@ -39,6 +45,7 @@ class AppearanceProvider: AppearanceProviderProtocol {
   }
 
   // Provide a numeral color for a given value
+  // 数値によって数字の色を変えている
   func numberColor(value: Int) -> UIColor {
     switch value {
     case 2, 4:

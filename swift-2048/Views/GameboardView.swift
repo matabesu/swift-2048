@@ -8,11 +8,19 @@
 
 import UIKit
 
+/**
+ ゲーム盤面の描画クラス
+*/
 class GameboardView : UIView {
+  // マスの数
   var dimension: Int
+  // タイルの横幅
   var tileWidth: CGFloat
+  // タイルの枠幅
   var tilePadding: CGFloat
+  // タイルの鋭角
   var cornerRadius: CGFloat
+  // タイルオブジェクトはディクショナリに管理
   var tiles: Dictionary<NSIndexPath, TileView>
 
   let provider = AppearanceProvider()
@@ -39,6 +47,7 @@ class GameboardView : UIView {
     let sideLength = padding + CGFloat(dimension)*(width + padding)
     super.init(frame: CGRectMake(0, 0, sideLength, sideLength))
     layer.cornerRadius = radius
+    // 盤面の描画
     setupBackground(backgroundColor: backgroundColor, tileColor: foregroundColor)
   }
   
@@ -59,6 +68,9 @@ class GameboardView : UIView {
     return (x >= 0 && x < dimension && y >= 0 && y < dimension)
   }
 
+  /**
+   指定しただけマスを描画する
+  */
   func setupBackground(backgroundColor bgColor: UIColor, tileColor: UIColor) {
     backgroundColor = bgColor
     var xCursor = tilePadding

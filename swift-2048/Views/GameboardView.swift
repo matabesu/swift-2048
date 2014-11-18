@@ -97,11 +97,14 @@ class GameboardView : UIView {
     let x = tilePadding + CGFloat(col)*(tileWidth + tilePadding)
     let y = tilePadding + CGFloat(row)*(tileWidth + tilePadding)
     let r = (cornerRadius >= 2) ? cornerRadius - 2 : 0
+    // タイルの生成
     let tile = TileView(position: CGPointMake(x, y), width: tileWidth, value: value, radius: r, delegate: provider)
     tile.layer.setAffineTransform(CGAffineTransformMakeScale(tilePopStartScale, tilePopStartScale))
-
+    // Viewにタイルを追加
     addSubview(tile)
+    // 追加したタイルを前面にもってくる
     bringSubviewToFront(tile)
+    // タイルの管理ディクショナリに追加
     tiles[NSIndexPath(forRow: row, inSection: col)] = tile
 
     // Add to board

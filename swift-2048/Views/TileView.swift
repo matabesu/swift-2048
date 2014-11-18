@@ -39,7 +39,7 @@ class TileView : UIView {
     numberLabel.font = delegate.fontForNumbers()
     // 親クラスのUIViewへ初期化処理
     super.init(frame: CGRectMake(position.x, position.y, width, width))
-    // 数字   ラベルを追加
+    // 数字ラベルを追加
     addSubview(numberLabel)
     layer.cornerRadius = radius
 
